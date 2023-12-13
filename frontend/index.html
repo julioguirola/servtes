@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServTes</title>
+    <link href="galery.css" rel="stylesheet">
+    <link href="support.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+    <script>
+        const username = localStorage.getItem('user')
+        const password = localStorage.getItem('pass')
+        fetch('/login_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.succes === 'ok') {
+                    const button = document.getElementById('stiky-button-admin')
+                    button.innerHTML = "<button id='sticky-button' onclick='go_admin()'>Administrar Sitio</button>"
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        function Servicios(){
+            location.href = 'servicios';
+        }
+
+        function log_in(){
+            location.href = 'login';
+        }
+        function log_out(){
+            localStorage.removeItem('user')
+            localStorage.removeItem('pass')
+            location.href = '/';
+        }
+    </script>
+    <nav id="nav">
+            <a class="navlink" style="background-color: rgb(95, 106, 253);" href="/">Principal</a>
+            <a class="navlink" href="servicios">Servicios</a>
+            <a class="navlink" href="trabajos">Trabajos</a>
+            <a class="navlink" href="productos">Productos</a>
+            <a class="mainLink" href="/"><img style="border-radius: 50%;" src="favicon.ico" width="60" height="60" alt="ServTes"></a>
+            <a class="mainLink" href="/"><h1>ServTes</h1></a>
+    </nav>
+    <div id="about">
+        <h3>``Es un grupo multidisciplinario especializado en las materias de Automática, Electrónica, Eléctric (facebook solo muestra eso)``</h3>
+    </div>
+    <div style="display: flex;">
+        <div class="gallery">
+            <img src="img1.jpg"/>
+            <img src="img2.jpg"/>
+            <img src="img3.jpg"/>
+            <img src="img4.jpg"/>
+            <img src="img5.jpg"/>
+            <img src="img6.jpg"/>
+            <img src="img7.jpg"/>
+        </div>
+        <div id="prod">
+            <h1 style="margin: 0rem 0rem 0rem 1rem;color: rgb(36, 36, 36);">Servicios</h1>
+            <div id="prodBoxes" style="margin-top: 0rem;">    
+                <div class="prodBox">
+                    <img style="border-radius: 50%;" src="prod.jpg" alt="">
+                    <div class="prodBoxtext">
+                        <h3>Servicio</h3>
+                        <p>Descripcion</p>
+                    </div>
+                </div>
+                <div class="prodBox">
+                    <img style="border-radius: 50%;" src="prod.jpg" alt="">
+                    <div class="prodBoxtext">
+                        <h3>Servicio</h3>
+                        <p>Descripcion</p>
+                    </div>
+                </div>
+                <div class="prodBox">
+                    <img style="border-radius: 50%;" src="prod.jpg" alt="">
+                    <div class="prodBoxtext">
+                        <h3>Servicio</h3>
+                        <p>Descripcion</p>
+                    </div>
+                </div>
+                <div class="prodBox">
+                    <img style="border-radius: 50%;" src="prod.jpg" alt="">
+                    <div class="prodBoxtext">
+                        <h3>Servicio</h3>
+                        <p>Descripcion</p>
+                    </div>
+                </div>
+            </div>
+            <button id="verServicios" onclick="Servicios()">Ver más</button>
+        </div>
+    </div>
+    <div class="footer">
+        <div id="footerElm1" style="margin: 2rem;">
+            <p style="color: rgb(161, 161, 161);">Contáctenos</p>
+            <div class="form-container">
+                <form class="form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required="">
+                </div>
+                <div class="form-group">
+                    <label for="textarea">Información</label>
+                    <textarea name="textarea" id="textarea" rows="10" cols="50" required=""></textarea>
+                </div>
+                <button class="form-submit-btn" type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <script>
+            function facebook(){
+                location.href = "https://www.facebook.com/SERVTES.Oficial/";
+            }
+            function youtube(){
+                location.href = 'https://www.youtube.com/@SERVTES';
+            }
+        </script>
+        <div id="footerElm2">
+            <button id="facebook" onclick="facebook()">
+                <svg viewBox="0 0 16 16" class="bi bi-facebook" fill="currentColor" height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+            </svg>
+                <span>Facebook</span>
+            </button>
+            <button id="youtube" style="margin-top: 20px;" onclick="youtube()"> 
+                <span class="icon"><svg fill="none" height="33" viewBox="0 0 120 120" width="33" xmlns="http://www.w3.org/2000/svg"><path d="m120 60c0 33.1371-26.8629 60-60 60s-60-26.8629-60-60 26.8629-60 60-60 60 26.8629 60 60z" fill="#cd201f"></path><path d="m25 49c0-7.732 6.268-14 14-14h42c7.732 0 14 6.268 14 14v22c0 7.732-6.268 14-14 14h-42c-7.732 0-14-6.268-14-14z" fill="#fff"></path><path d="m74 59.5-21 10.8253v-21.6506z" fill="#cd201f"></path></svg></span>
+                <span class="text1">YouTube</span>
+                <span class="text2">ST</span> 
+            </button>
+        </div>
+        <div style="margin: 2rem; margin-left: 2rem;">
+            <button id="login" onclick="log_in()">
+                Iniciar Sesión
+            </button>
+            <button id="login" onclick="log_out()">
+                Cerrar Sesión
+            </button>
+        </div>
+    </div>
+    <div id="stiky-button-admin"></div>
+</body>
+</html>

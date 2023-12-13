@@ -1,0 +1,149 @@
+#nav {
+  position: -webkit-sticky; 
+  position: sticky; 
+  top: 0;
+  background-color: rgb(36, 36, 36);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 8rem;
+  z-index: 5;
+  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
+  border-bottom: rgb(95, 106, 253);
+  border-bottom-style: solid;
+}
+
+.navlink {
+  margin: 1rem;
+  border-radius: 10%;
+  color: antiquewhite;
+  font-size: larger;
+  display: block;
+  text-decoration: none;
+  padding: 2rem;
+}
+
+.mainLink {
+  margin: 1rem;
+  color: antiquewhite;
+  display: block;
+  text-decoration: none;
+  padding: 2rem;
+}
+
+.navlink:hover {
+  background-color: rgb(150, 150, 150);
+}
+
+#about {
+  border-style: solid;
+  border-radius: 1rem;
+  border-color: rgb(95, 106, 253);
+  position: relative;
+  top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#prod {
+  display: block;
+  position: relative;
+  height: 25rem;
+  left: 17rem;
+  top: 4rem;
+  width: 38rem;
+}
+
+.prodBox {
+  margin: 1rem;
+  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 16rem;
+  border-radius: 5%;
+}
+
+#prodBoxes {
+  display: grid;
+  grid-template-columns: auto auto;
+  margin-top: 2rem;
+}
+
+.footer {
+  background-color: #212121;
+  position: relative;
+  top: 5rem;
+  display: flex;
+  border-top: #3b82f6;
+  border-top-style: solid;
+}
+
+#footerElm1 {
+  width: 30rem;
+}
+
+#footerElm2 {
+  width: 12rem;
+  margin: 2rem;
+  margin-left: 20rem;
+}
+
+
+#verServicios {
+  margin-left: 1rem;
+  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
+  background-color: #f3f7fe;
+  color: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  width: 100px;
+  height: 45px;
+  transition: .3s;
+}
+
+#verServicios:hover {
+  background-color: #3b82f6;
+  box-shadow: 0 0 0 5px #3b83f65f;
+  color: #fff;
+}
+
+.prodBoxtext {
+  color: rgb(36, 36, 36);
+}
+
+.prodBoxtext h3 {
+  margin-left: 1rem;
+}
+
+.prodBoxtext p {
+  margin-left: 1rem;
+}
+
+.prodBoxserv {
+  margin: 1rem;
+  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 30rem;
+  border-radius: 5%;
+}
+
+#sticky-button {
+  position: fixed;
+  bottom: 10px; 
+  right: 10px;
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: 2px solid #2980b9; 
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#sticky-button:hover {
+  background-color: #2980b9; 
+}
+
