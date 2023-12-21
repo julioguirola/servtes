@@ -50,6 +50,6 @@ app.get('*', (req,res) => {
     res.sendFile(process.cwd() + '/frontend/notfound.html')
 })
 
-app.listen(80, () => {
-    console.log('http://localhost:80')
+app.listen(8080, () => {
+    console.log('http://localhost:8080')
 })
