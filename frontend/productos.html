@@ -10,6 +10,7 @@
     <script>
         const username = localStorage.getItem('user')
         const password = localStorage.getItem('pass')
+        console.log(username, password)
         fetch('/login_api', {
                 method: 'POST',
                 headers: {
@@ -19,7 +20,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.succes === 'ok') {
+                if (data.rol === 'admin') {
                     const button = document.getElementById('stiky-button-admin')
                     button.innerHTML = "<button id='sticky-button' onclick='go_admin()'>Administrar Sitio</button>"
                 }
@@ -39,7 +40,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                data.result.forEach(element => {
+                data.resultado.forEach(element => {
                     div.insertAdjacentHTML('beforeEnd',`
                         <div class='prodBoxserv'>
                             <h3>${element.name}</h3>

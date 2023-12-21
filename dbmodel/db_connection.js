@@ -1,26 +1,39 @@
-import mysql from 'mysql2/promise'
+import postgres from "postgres"
 
-const DEFAULT_CONFIG = {
-    host: 'localhost',
-    user: 'root',
-    port: 3306,
-    password: 'root',
-    database: 'servtesdb'
-}
+const sql = postgres('postgres://fl0user:TD7HKbU4tZoq@ep-hidden-glitter-78222556.us-east-2.aws.neon.fl0.io:5432/servtesdb?sslmode=require', {
+  host                 : 'ep-hidden-glitter-78222556.us-east-2.aws.neon.fl0.io',           
+  port                 : 5432,          
+  database             : 'servtesdb',            
+  username             : 'fl0user',           
+  password             : 'TD7HKbU4tZoq',
+  ssl                  : 'require'
+})
 
-const connection = await mysql.createConnection(DEFAULT_CONFIG)
 
-export async function checkUser(user,pass) {
-    const result = await connection.query(`
-        select name, pass, rol from users where (name = ? && pass = ?)`,
-        [user,pass]
-        )
-    return result[0]
+export async function checkUser (user,pass) {
+    if (user){
+        const result = await sql`
+        select name, pass, rol from users where (name = ${user} and pass = ${pass})`
+        
+        return result.at(0)
+    } else {
+        return false
+    }
 }
 
 export async function getContent(tipo){
-    const result = await connection.query(`
-        select name, des from ${tipo}`
-        )
-    return result[0]
+    const columns = [tipo]
+
+    const result = await sql`select name, des from ${sql(columns)}`
+    
+    let lista = []
+
+    result.forEach(element => {
+        lista.push(element)
+    })
+
+    return {resultado : lista}
 }
+
+// console.log(await checkUser ('administrador','admin'))
+// console.log(await getContent ('productos'))
