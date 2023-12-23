@@ -41,8 +41,13 @@ export async function delContent(id, tipo) {
     await sql`delete from ${sql(columns)} where id = ${id}`
 }
 
+export async function addContent(name, des, tipo) {
+    const table = tipo
+    
+    await sql`insert into ${sql(table)} (name, des) values (${name}, ${des})`
+}
 
+// addContent('name', 'des', 'productos')
 // delContent(1, 'productos')
-
 // console.log(await checkUser ('administrador','admin'))
 // console.log(await getContent ('productos'))

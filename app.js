@@ -1,5 +1,5 @@
 import express from 'express'
-import { checkUser, delContent, getContent } from './dbmodel/db_connection.js'
+import { addContent, checkUser, delContent, getContent } from './dbmodel/db_connection.js'
 
 const app = express();
 
@@ -47,6 +47,12 @@ app.post('/get_content', async (req,res) => {
     if (result) {
         res.json(result)
     }
+})
+
+app.post('/post_content', async (req,res) => {
+    const {name, des, tipo} = req.body
+    await addContent(name, des, tipo)
+    res.json({})    
 })
 
 app.delete('/del_content', async (req,res) => {

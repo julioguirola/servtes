@@ -106,7 +106,7 @@
                             <div class="card-content">
                                 <h3>Agregar</h3>
                             </div>
-                            <button>Agregar</button>
+                            <button onclick="add_element('nombre','descripcion', '${tipo}')">Agregar</button>
                         </div>   
                     `)
                 })
@@ -123,6 +123,22 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ id, tipo })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    location.href = '/admin'
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+            });
+        }
+        function add_element(name, des, tipo) {
+            fetch('/post_content', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, des, tipo })
                 })
                 .then(response => response.json())
                 .then(data => {
