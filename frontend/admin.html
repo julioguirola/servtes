@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        section {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 10px;
+            width: 300px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .feedback {
+            background-color: #f8f8f8;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const servicios = document.getElementById('cont-servicios')
+            const trabajos = document.getElementById('cont-trabajos')
+            const productos = document.getElementById('cont-productos')
+            const mensajes = document.getElementById('cont-mensajes')
+
+            const tipos = ['productos', 'servicios', 'trabajos']
+
+            tipos.forEach(tipo => {
+                const div = document.getElementById(`cont-${tipo}`)
+                fetch('/get_content', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tipo })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    data.resultado.forEach(element => {
+                        div.insertAdjacentHTML('beforeEnd',`
+                            <div class="card">
+                                <div class="card-content">
+                                    <h3>${element.name}</h3>
+                                    <p>${element.des}</p>
+                                </div>
+                                <button onclick="rem_element(${element.id},'${tipo}')">Eliminar</button>
+                                <button>Editar</button>
+                            </div>
+                        `)
+                    });
+                    div.insertAdjacentHTML('beforeEnd',`
+                        <div class="card">
+                            <div class="card-content">
+                                <h3>Agregar</h3>
+                            </div>
+                            <button>Agregar</button>
+                        </div>   
+                    `)
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            })
+
+        })
+        function rem_element(id, tipo) {
+            fetch('/del_content', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id, tipo })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    location.href = '/admin'
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>ServTes / Administración</h1>
+    </header>
+    <section>
+        <div class="container">
+            <h2>Servicios</h2>
+            <div class="flex-container" id="cont-servicios">
+                <!-- Aquí irían tus tarjetas de servicios -->  
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <h2>Productos</h2>
+            <div class="flex-container" id="cont-productos">
+                <!-- Aquí irían tus tarjetas de productos -->
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <h2>Trabajos</h2>
+            <div class="flex-container" id="cont-trabajos">
+                <!-- Aquí irían tus tarjetas de trabajos -->
+            </div>
+        </div>
+    </section>
+    <section class="feedback">
+        <h2>Mensajes de Usuarios</h2>
+        <div class="container" id="cont-mensajes">
+            <!-- Aquí irían los feedbacks de los usuarios -->
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2023 Tu Empresa. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

@@ -1,5 +1,5 @@
 import express from 'express'
-import { checkUser, getContent } from './dbmodel/db_connection.js'
+import { checkUser, delContent, getContent } from './dbmodel/db_connection.js'
 
 const app = express();
 
@@ -26,6 +26,10 @@ app.get('/login', (req,res) => {
     res.sendFile(process.cwd() + '/frontend/login.html')
 })
 
+app.get('/admin', async (req,res) => {
+    res.sendFile(process.cwd() + '/frontend/admin.html')
+})
+
 app.post('/login_api', async (req,res) => {
     const {username, password} = req.body
     const result = await checkUser(username, password)
@@ -43,7 +47,12 @@ app.post('/get_content', async (req,res) => {
     if (result) {
         res.json(result)
     }
+})
 
+app.delete('/del_content', async (req,res) => {
+    const {id, tipo} = req.body
+    await delContent(id, tipo)
+    res.json({})
 })
 
 app.get('*', (req,res) => {

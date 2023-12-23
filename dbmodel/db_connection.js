@@ -24,7 +24,7 @@ export async function checkUser (user,pass) {
 export async function getContent(tipo){
     const columns = [tipo]
 
-    const result = await sql`select name, des from ${sql(columns)}`
+    const result = await sql`select id, name, des from ${sql(columns)}`
     
     let lista = []
 
@@ -34,6 +34,15 @@ export async function getContent(tipo){
 
     return {resultado : lista}
 }
+
+export async function delContent(id, tipo) {
+    const columns = [tipo]
+
+    await sql`delete from ${sql(columns)} where id = ${id}`
+}
+
+
+// delContent(1, 'productos')
 
 // console.log(await checkUser ('administrador','admin'))
 // console.log(await getContent ('productos'))
