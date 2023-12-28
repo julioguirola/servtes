@@ -31,12 +31,12 @@ app.get('/admin', async (req,res) => {
 })
 
 app.post('/login_api', async (req,res) => {
-    const {username, password} = req.body
-    const result = await checkUser(username, password)
+    const {user, pass} = req.body
+    const result = await checkUser(user, pass)
     if (result) {
-        res.json({succes: 'ok', username: username, password: password, rol: result.rol})
+        res.json({succes: true, user: user, passw: pass, rol: result.rol})
     } else {
-        res.json({succes: 'notok'})
+        res.json({succes: false})
     }
 })
 
@@ -45,20 +45,22 @@ app.post('/get_content', async (req,res) => {
     const result = await getContent(tipo)
 
     if (result) {
-        res.json(result)
+        res.json({succes: true, result: result})
+    } else {
+        res.json({succes: false})
     }
 })
 
 app.post('/post_content', async (req,res) => {
     const {name, des, tipo} = req.body
-    await addContent(name, des, tipo)
-    res.json({})    
+    const result = await addContent(name, des, tipo)
+    res.json({succes: result})    
 })
 
 app.delete('/del_content', async (req,res) => {
     const {id, tipo} = req.body
-    await delContent(id, tipo)
-    res.json({})
+    const result = await delContent(id, tipo)
+    res.json({succes: result})
 })
 
 app.get('*', (req,res) => {

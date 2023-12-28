@@ -1,149 +1,153 @@
-#nav {
-  position: -webkit-sticky; 
-  position: sticky; 
-  top: 0;
-  background-color: rgb(36, 36, 36);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 8rem;
-  z-index: 5;
-  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
-  border-bottom: rgb(95, 106, 253);
-  border-bottom-style: solid;
+body {
+    margin: 0;
 }
 
-.navlink {
-  margin: 1rem;
-  border-radius: 10%;
-  color: antiquewhite;
-  font-size: larger;
-  display: block;
-  text-decoration: none;
-  padding: 2rem;
+header {
+    position: sticky;
+    top: 0;
 }
 
-.mainLink {
-  margin: 1rem;
-  color: antiquewhite;
-  display: block;
-  text-decoration: none;
-  padding: 2rem;
+main {
+    height: 100vh;
 }
 
-.navlink:hover {
-  background-color: rgb(150, 150, 150);
+nav {
+    background-color: rgb(56, 56, 56);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom: 3px solid rgb(38, 68, 236);
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(100px, 1fr)
+    );
+    gap: 10px;
+    padding: 10px;
 }
 
-#about {
-  border-style: solid;
-  border-radius: 1rem;
-  border-color: rgb(95, 106, 253);
-  position: relative;
-  top: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+nav a {
+    text-decoration: none;
+    color: aliceblue;
+    display: block;
+    border-radius: 5px;
+    width: fit-content;
+    font-size: 20px;
 }
 
-#prod {
-  display: block;
-  position: relative;
-  height: 25rem;
-  left: 17rem;
-  top: 4rem;
-  width: 38rem;
+nav .navLink:hover {
+    background-color: rgb(95, 95, 95);
 }
 
-.prodBox {
-  margin: 1rem;
-  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: auto auto;
-  width: 16rem;
-  border-radius: 5%;
+.about {
+    margin: 5px;
+    text-align: center;
+    box-shadow: 0 0 5px;
+    border-radius: 5px;
+    border: 2px solid rgb(38, 68, 236);
+    background-color: rgb(219, 218, 218);
+    color: rgb(106, 109, 109);
 }
 
-#prodBoxes {
-  display: grid;
-  grid-template-columns: auto auto;
-  margin-top: 2rem;
+.gallery {
+    display: flex;
+    height: 200px;
+    gap: 10px;
+    justify-content: center;
+    overflow-x: auto;
 }
 
-.footer {
-  background-color: #212121;
-  position: relative;
-  top: 5rem;
-  display: flex;
-  border-top: #3b82f6;
-  border-top-style: solid;
+footer {
+    background-color: rgb(37, 37, 37);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top: 3px solid rgb(38, 68, 236);
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(200px, 1fr)
+    );
+    justify-content: center;
+    padding: 40px;
+    gap: 20px;
 }
 
-#footerElm1 {
-  width: 30rem;
+footer h2 {
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
-#footerElm2 {
-  width: 12rem;
-  margin: 2rem;
-  margin-left: 20rem;
+.contacto {
+    color: aliceblue;
+    text-align: center;
 }
 
-
-#verServicios {
-  margin-left: 1rem;
-  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
-  background-color: #f3f7fe;
-  color: #3b82f6;
-  border: none;
-  border-radius: 8px;
-  width: 100px;
-  height: 45px;
-  transition: .3s;
+.contacto a {
+    text-decoration: none;
+    color: aliceblue;
+    font-size: 20px;
 }
 
-#verServicios:hover {
-  background-color: #3b82f6;
-  box-shadow: 0 0 0 5px #3b83f65f;
-  color: #fff;
+.redes {
+    display: grid;
+    place-content: center;
+    grid-template-rows: 35px 35px;
+    gap: 10px;
 }
 
-.prodBoxtext {
-  color: rgb(36, 36, 36);
+.facebook {
+    display: flex;
+    border: none;
+    font-size: 20px;
+    background-color: transparent;
+    border-radius: 8px;
+    border: 2px solid #1877f2;
+    color: aliceblue;
+    cursor: pointer;
+    padding: 4px;
+    gap: 3px;
+    align-items: center;
 }
 
-.prodBoxtext h3 {
-  margin-left: 1rem;
+.facebook:hover {
+    background-color: #1877f2;
 }
 
-.prodBoxtext p {
-  margin-left: 1rem;
+.youtube {
+    width: 122.84px;
+    display: flex;
+    border: none;
+    font-size: 20px;
+    background-color: transparent;
+    border-radius: 8px;
+    border: 2px solid #C00;
+    color: aliceblue;
+    cursor: pointer;
+    padding: 4px;
+    gap: 3px;
+    place-items: center;
 }
 
-.prodBoxserv {
-  margin: 1rem;
-  box-shadow: 0 0 10px #0002, 0 20px 40px -20px #0004;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: auto auto;
-  width: 30rem;
-  border-radius: 5%;
+.youtube:hover {
+    background-color: #C00;
 }
 
-#sticky-button {
-  position: fixed;
-  bottom: 10px; 
-  right: 10px;
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px 20px;
-  border: 2px solid #2980b9; 
-  border-radius: 5px;
-  cursor: pointer;
+.log {
+    display: grid;
+    grid-template-rows: 35px 35px;
+    place-content: center;
+    gap: 10px;
 }
 
-#sticky-button:hover {
-  background-color: #2980b9; 
+.log button {
+    display: flex;
+    width: 119.05px;
+    border: none;
+    border: 1px solid #fff;
+    color: aliceblue;
+    font-size: 15px;
+    background-color: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    place-items: center;
 }
-

@@ -11,43 +11,59 @@ const sql = postgres('postgres://fl0user:TD7HKbU4tZoq@ep-hidden-glitter-78222556
 
 
 export async function checkUser (user,pass) {
-    if (user){
+    try {
         const result = await sql`
-        select name, pass, rol from users where (name = ${user} and pass = ${pass})`
-        
+        select user_name, pass_word, rol from users where (user_name = ${user} and pass_word = ${pass})`
+
         return result.at(0)
-    } else {
-        return false
+    } catch (e) {
+        console.log(e)
+        return
     }
 }
 
 export async function getContent(tipo){
     const columns = [tipo]
 
-    const result = await sql`select id, name, des from ${sql(columns)}`
-    
-    let lista = []
+    try {
+        const result = await sql`select id, title, description, image from ${sql(columns)}`
+        
+        let lista = []
 
-    result.forEach(element => {
-        lista.push(element)
-    })
+        result.forEach(element => {
+            lista.push(element)
+        })
 
-    return {resultado : lista}
+        return {resultado : lista}
+    } catch (e) {
+        console.log(e)
+        return
+    }
 }
 
 export async function delContent(id, tipo) {
-    const columns = [tipo]
-
-    await sql`delete from ${sql(columns)} where id = ${id}`
+    try {
+        const columns = [tipo]
+        await sql`delete from ${sql(columns)} where id = ${id}`
+        return true
+    } catch (e) {
+        console.log(e)
+        return false
+    }
 }
 
-export async function addContent(name, des, tipo) {
-    const table = tipo
-    
-    await sql`insert into ${sql(table)} (name, des) values (${name}, ${des})`
+export async function addContent(title, description, image, tipo) {
+    try {
+        const table = tipo
+        await sql`insert into ${sql(table)} (title, description, image) values (${title}, ${description}, ${image})`
+        return true
+    } catch (e) {
+        console.log(e)
+        return false
+    }
 }
 
 // addContent('name', 'des', 'productos')
 // delContent(1, 'productos')
-// console.log(await checkUser ('administrador','admin'))
-// console.log(await getContent ('productos'))
+// console.log(await checkUser ('admin','admin'))
+// console.log(await getContent ('producto'))

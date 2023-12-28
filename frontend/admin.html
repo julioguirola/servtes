@@ -70,84 +70,7 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const servicios = document.getElementById('cont-servicios')
-            const trabajos = document.getElementById('cont-trabajos')
-            const productos = document.getElementById('cont-productos')
-            const mensajes = document.getElementById('cont-mensajes')
-
-            const tipos = ['productos', 'servicios', 'trabajos']
-
-            tipos.forEach(tipo => {
-                const div = document.getElementById(`cont-${tipo}`)
-                fetch('/get_content', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ tipo })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    data.resultado.forEach(element => {
-                        div.insertAdjacentHTML('beforeEnd',`
-                            <div class="card">
-                                <div class="card-content">
-                                    <h3>${element.name}</h3>
-                                    <p>${element.des}</p>
-                                </div>
-                                <button onclick="rem_element(${element.id},'${tipo}')">Eliminar</button>
-                                <button>Editar</button>
-                            </div>
-                        `)
-                    });
-                    div.insertAdjacentHTML('beforeEnd',`
-                        <div class="card">
-                            <div class="card-content">
-                                <h3>Agregar</h3>
-                            </div>
-                            <button onclick="add_element('nombre','descripcion', '${tipo}')">Agregar</button>
-                        </div>   
-                    `)
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-            })
-
-        })
-        function rem_element(id, tipo) {
-            fetch('/del_content', {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id, tipo })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    location.href = '/admin'
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-            });
-        }
-        function add_element(name, des, tipo) {
-            fetch('/post_content', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ name, des, tipo })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    location.href = '/admin'
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-            });
-        }
+       
     </script>
 </head>
 <body>
@@ -185,7 +108,7 @@
         </div>
     </section>
     <footer>
-        <p>&copy; 2023 Tu Empresa. Todos los derechos reservados.</p>
+        <p>&copy; 2024 ServTes. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>
