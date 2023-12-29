@@ -67,6 +67,8 @@ app.get('*', (req,res) => {
     res.sendFile(process.cwd() + '/frontend/notfound.html')
 })
 
-app.listen(8080, () => {
+const port = process.env.PORT ?? 8080;
+
+app.listen(port, () => {
     console.log('http://localhost:8080')
 })
