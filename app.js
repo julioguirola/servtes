@@ -34,7 +34,7 @@ app.post('/login_api', async (req,res) => {
     const {user, pass} = req.body
     const result = await checkUser(user, pass)
     if (result) {
-        res.json({succes: true, user: user, passw: pass, rol: result.rol})
+        res.json({succes: true, user: user, pass: pass, rol: result.rol})
     } else {
         res.json({succes: false})
     }

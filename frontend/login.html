@@ -7,100 +7,118 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            background-color: #0002;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             height: 100vh;
+            display: flex;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            place-content: center;
+            align-items: center;
+            background-color: rgb(153, 153, 153);
         }
 
-        .login-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
+        h3 {
+            color: rgb(38, 68, 236);
         }
 
-        .login-form {
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #3b82f6;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #3b82f6;
+        input {
+            border: 1px solid #09f;
             border-radius: 4px;
         }
-
-        .form-group button {
-            background-color: #3b82f6;
-            color: #fff;
-            padding: 10px;
-            border: none;
+        
+        button {
+            border: 1px solid #09f;
             border-radius: 4px;
             cursor: pointer;
-            width: 100%;
         }
+
+        .container {
+            display: grid;
+            gap: 10px;
+            padding: 30px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 0 10px;
+        }
+
+        #loader {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        #loader div {
+            width: 15px;
+            height: 15px;
+            background-color: #09f;
+            border-radius: 50%;
+            animation: mover;
+            animation-iteration-count: infinite;
+            animation-duration: 1000ms;
+        }
+
+        @keyframes mover {
+           from {
+            opacity: 0;
+           }
+           to {
+            opacity: 1;
+           }
+        }
+
+
     </style>
     <script>
+        async function vaciar() {
+            document.getElementById('loader').innerHTML = ""
+        }
         function send_login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            fetch('/login_api', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.succes === 'ok') {
-                    localStorage.setItem('user', username)
-                    localStorage.setItem('pass', password)
-                    location.href = '/'
-                } else {
-                    alert('Credenciales incorrectas')
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+            
+            if (user == "" || pass == "") {
+                alert("Llene todos los campos");
+            } else {
+                document.getElementById('loader').innerHTML = "<div></div><div></div><div></div>"
+                fetch('/login_api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ user, pass })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    vaciar();
+                    if (data.succes) {
+                        localStorage.setItem('user', user)
+                        localStorage.setItem('pass', pass)
+                        alert('Ha iniciado sesión correctamente')
+                        location.href = '/'
+                    } else {
+                        alert('Credenciales incorrectas')
+                    }
+                })
+                .catch(error => {
+                    vaciar();
+                    console.error('Error:', error);
+                });
+            }
+        }
+        function atras() {
+            location.href = '/'
         }
     </script>
 </head>
 <body>
-    <div class="login-container">
-        <h2 style="color: #0002;">Iniciar Sesión</h2>
-        <div class="login-form">
-            <div class="form-group">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <button onclick="send_login()">Iniciar Sesión</button>
-            </div>
+    <section class="container">
+        <h3>Iniciar Sessión</h3>
+        <p>Usuario</p>
+        <input type="text" id="user">
+        <p>Contraseña</p>
+        <input type="text" id="pass">
+        <button onclick="send_login()">Iniciar Sessión</button>
+        <button onclick="atras()">Ir Atrás</button>
+        <div id="loader">
         </div>
-    </div>
+    </section>
 </body>
 </html>
