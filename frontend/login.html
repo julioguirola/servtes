@@ -40,19 +40,29 @@
         }
 
         #loader {
+            justify-content: center;
             display: flex;
             gap: 10px;
-            justify-content: center;
         }
 
-        #loader div {
+        .load {
             width: 15px;
             height: 15px;
             background-color: #09f;
             border-radius: 50%;
             animation: mover;
             animation-iteration-count: infinite;
-            animation-duration: 1000ms;
+            animation-duration: 2s;
+        }
+
+        .load:nth-child(1) {
+            animation-delay: 0ms;
+        }
+        .load:nth-child(2) {
+            animation-delay: 300ms;
+        }
+        .load:nth-child(3) {
+            animation-delay: 600ms;
         }
 
         @keyframes mover {
@@ -77,7 +87,7 @@
             if (user == "" || pass == "") {
                 alert("Llene todos los campos");
             } else {
-                document.getElementById('loader').innerHTML = "<div></div><div></div><div></div>"
+                document.getElementById('loader').innerHTML = "<div class='load'></div><div class='load'></div><div class='load'></div>"
                 fetch('/login_api', {
                     method: 'POST',
                     headers: {
