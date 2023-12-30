@@ -77,14 +77,21 @@
 
     </style>
     <script>
-        async function vaciar() {
-            document.getElementById('loader').innerHTML = ""
+        function insertar(messaje) {
+            document.getElementById('loader').innerHTML = messaje
+        }
+        function isNullOrWS(string) {
+            if (string === "") return true;
+            for (let i = 0; i < string.length; i++) {
+                if (string[i] !== " ") return false
+            }
+            return true
         }
         function send_login() {
             const user = document.getElementById('user').value;
             const pass = document.getElementById('pass').value;
             
-            if (user == "" || pass == "") {
+            if (isNullOrWS(user) && isNullOrWS(pass)) {
                 alert("Llene todos los campos");
             } else {
                 document.getElementById('loader').innerHTML = "<div class='load'></div><div class='load'></div><div class='load'></div>"
@@ -97,18 +104,16 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    vaciar();
                     if (data.succes) {
                         localStorage.setItem('user', user)
                         localStorage.setItem('pass', pass)
-                        alert('Ha iniciado sesión correctamente')
                         location.href = '/'
                     } else {
-                        alert('Credenciales incorrectas')
+                        insertar("<p style='color: #ff3d3d'>Datos Incorrectos</p>")
                     }
                 })
                 .catch(error => {
-                    vaciar();
+                    insertar("<p style='color: #ff3d3d'>Error de conexión</p>");
                     console.error('Error:', error);
                 });
             }

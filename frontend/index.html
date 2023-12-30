@@ -12,6 +12,10 @@
             const pass = localStorage.getItem('pass')
             const button = document.getElementById('button-admin')
 
+            if (user) {
+                document.getElementById('button-login-text').innerText = "Cerrar Sesión"
+            }
+
             if (user != null && pass != null) {
                 fetch('/login_api', {
                     method: 'POST',

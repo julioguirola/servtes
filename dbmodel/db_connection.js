@@ -23,10 +23,8 @@ export async function checkUser (user,pass) {
 }
 
 export async function getContent(tipo){
-    const columns = [tipo]
-
     try {
-        const result = await sql`select id, title, description, image from ${sql(columns)}`
+        const result = await sql`select id, title, description, image, tipo, destacado from datos where tipo = ${tipo}`
         
         let lista = []
 
@@ -41,10 +39,10 @@ export async function getContent(tipo){
     }
 }
 
-export async function delContent(id, tipo) {
+export async function delContent(id) {
     try {
         const columns = [tipo]
-        await sql`delete from ${sql(columns)} where id = ${id}`
+        await sql`delete from datos where id = ${id}`
         return true
     } catch (e) {
         console.log(e)
@@ -52,10 +50,9 @@ export async function delContent(id, tipo) {
     }
 }
 
-export async function addContent(title, description, image, tipo) {
+export async function addContent(title, description, image, tipo, destacado) {
     try {
-        const table = tipo
-        await sql`insert into ${sql(table)} (title, description, image) values (${title}, ${description}, ${image})`
+        await sql`insert into datos (title, description, image, tipo, destacado) values (${title}, ${description}, ${image}, ${tipo}, ${destacado})`
         return true
     } catch (e) {
         console.log(e)
@@ -63,7 +60,8 @@ export async function addContent(title, description, image, tipo) {
     }
 }
 
-// addContent('name', 'des', 'productos')
+// test
+// addContent('name', 'des', '/servicio.png', 'producto', 0)
 // delContent(1, 'productos')
 // console.log(await checkUser ('admin','admin'))
 // console.log(await getContent ('producto'))

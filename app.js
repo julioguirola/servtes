@@ -52,14 +52,14 @@ app.post('/get_content', async (req,res) => {
 })
 
 app.post('/post_content', async (req,res) => {
-    const {name, des, tipo} = req.body
-    const result = await addContent(name, des, tipo)
+    const {name, des, url_image, tipo, destacado} = req.body
+    const result = await addContent(name, des, url_image, tipo, destacado)
     res.json({succes: result})    
 })
 
 app.delete('/del_content', async (req,res) => {
-    const {id, tipo} = req.body
-    const result = await delContent(id, tipo)
+    const {id} = req.body
+    const result = await delContent(id)
     res.json({succes: result})
 })
 
