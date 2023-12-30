@@ -6,7 +6,7 @@
     <title>Admin</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -19,7 +19,7 @@
             padding: 1em 0;
         }
 
-        main {
+        #elementos {
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(
@@ -27,9 +27,10 @@
                 minmax(350px, 1fr)
             );
             gap: 20px;
+            justify-items: center;
         }
 
-        section {
+        .agregar {
             display: grid;
             box-shadow: 0 0 5px black;
             padding: 5px;
@@ -39,28 +40,52 @@
             max-width: 350px;
         }
 
-        section div {
+        section > div {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        section h3 {
+        .agregar h3 {
             margin: 5px;
         }
 
-        section p {
+        .agregar p {
             margin: 0;
         }
 
         article {
-            box-shadow: 0 0 5px black;
-            padding: 5px;
-            border-radius: 5px;
+            box-shadow: 0 0 4px black;
+            width: 300px;
+            height: 200px;
+            border-radius: 8px;
+            position: relative;
+            cursor: pointer;
         }
 
-        h2 {
-            color: #333;
+        article div {
+            position: absolute;
+            bottom: 0;
+            width: inherit;
+            height: 30px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            background-color: rgba(35, 108, 204, 0.8);
+            transition: 0.5s;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+
+        article p {
+            margin: 0;
+            user-select: none;
+            color: aliceblue;
+        }
+
+        article:hover div {
+            height: 100px;
         }
 
         footer {
@@ -73,8 +98,79 @@
         textarea {
             resize: none;
         }
+
+        .elemento {
+            border: 1px solid #09f;
+            padding: 10px;
+            max-width: 350px;
+            box-shadow: 0 0 10px black;
+            border-radius: 8px;
+        }
+
+        #loader {
+            justify-content: center;
+            display: flex;
+            gap: 10px;
+        }
+
+        .load {
+            width: 15px;
+            height: 15px;
+            background-color: #09f;
+            border-radius: 50%;
+            animation: mover;
+            animation-iteration-count: infinite;
+            animation-duration: 2s;
+        }
+
+        .load:nth-child(1) {
+            animation-delay: 0ms;
+        }
+        .load:nth-child(2) {
+            animation-delay: 300ms;
+        }
+        .load:nth-child(3) {
+            animation-delay: 600ms;
+        }
+
+        @keyframes mover {
+           from {
+            opacity: 0;
+           }
+           to {
+            opacity: 1;
+           }
+        }
+
     </style>
+    <script src="front.js"></script>
     <script>
+        const user = localStorage.getItem('user')
+        const pass = localStorage.getItem('pass')
+
+        if (user != null && pass != null) {
+            fetch('/login_api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({user, pass})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.rol != 'admin') {
+                    location.href = '/'
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } else {
+            location.href = '/'
+        }
+
+        document.addEventListener('DOMContentLoaded', cargarElements('admin', false))
+
         function isNullOrWS(string) {
             if (string === "") return true;
             for (let i = 0; i < string.length; i++) {
@@ -83,13 +179,14 @@
             return true
         }
         function addProducto() {
-            const name = document.getElementById('name').value
+            const name = document.getElementById('nombre').value
             const des = document.getElementById('description').value
             const url_image = document.getElementById('url_image').value
             const tipo = document.getElementById('tipo').value
             const destacado = document.getElementById('destacado').checked ? 1 : 0
-
+            
             if (!isNullOrWS(name) && !isNullOrWS(des) && !isNullOrWS(url_image)) {
+                document.getElementById('loader').innerHTML = "<div class='load'></div><div class='load'></div><div class='load'></div>"
                 fetch('/post_content', {
                     method: "POST",
                     headers: {
@@ -100,14 +197,16 @@
                 .then(res => res.json())
                 .then(data => {
                     if (data.succes) {
-                        alert('Agregado Correctamente')
+                        document.getElementById('loader').innerHTML = "<p style='color: #09f'>Agregado Correctamente</p>"
                     } else {
-                        alert('Error, intente de nuevo')
+                        document.getElementById('loader').innerHTML = "<p style='color: red'>Error, intente de nuevo</p>"
                     }
                 })
                 .catch(e => {
                     console.log(e)
                 })
+            } else {
+                alert('Llene todos los campos')
             }
        }
     </script>
@@ -117,24 +216,28 @@
         <h1>ServTes / Administración</h1>
     </header>
     <main>
-        <section>
-            <h3>Agregar Elemento</h3>
-            <p>Nombre</p>
-            <input id="name" type="text">
-            <p>Descripción</p>
-            <textarea id="description"></textarea>
-            <p>URL Imagen</p>
-            <input id="url_image" type="text">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <p>Tipo:</p>
-                <select id="tipo">
-                    <option value="producto">Producto</option>
-                    <option value="servicio">Servicio</option>
-                    <option value="trabajo">Trabajo</option>
-                </select>
-                <p>Destacar:</p> <input id="destacado" type="checkbox">
-                <button onclick="addProducto()">Agregar</button>
-            </div>
+        <section  id="elementos">
+            <section class="agregar">
+                <h3>Agregar Elemento</h3>
+                <p>Nombre</p>
+                <input id="nombre" type="text">
+                <p>Descripción</p>
+                <textarea id="description"></textarea>
+                <p>URL Imagen</p>
+                <input id="url_image" type="text">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <p>Tipo:</p>
+                    <select id="tipo">
+                        <option value="producto">Producto</option>
+                        <option value="servicio">Servicio</option>
+                        <option value="trabajo">Trabajo</option>
+                    </select>
+                    <p>Destacar:</p> <input id="destacado" type="checkbox">
+                    <button onclick="addProducto()">Agregar</button>
+                </div>
+                <div id="loader">
+                </div>
+            </section>
         </section>
     </main>
     <footer>

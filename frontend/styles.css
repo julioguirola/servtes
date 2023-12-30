@@ -6,10 +6,52 @@ header {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
+    z-index: 2;
 }
 
-main {
-    height: 100vh;
+.elementos {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(350px, 1fr)
+    );
+    gap: 20px;
+    justify-items: center;
+}
+
+article {
+    box-shadow: 0 0 4px black;
+    width: 300px;
+    height: 200px;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+}
+
+article p {
+    margin: 0;
+    user-select: none;
+    color: aliceblue;
+}
+
+article div {
+    position: absolute;
+    bottom: 0;
+    width: inherit;
+    height: 30px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: rgba(35, 108, 204, 0.8);
+    transition: 0.5s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+article:hover div {
+    height: 100px;
 }
 
 nav {

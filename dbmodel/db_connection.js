@@ -22,17 +22,42 @@ export async function checkUser (user,pass) {
     }
 }
 
-export async function getContent(tipo){
-    try {
-        const result = await sql`select id, title, description, image, tipo, destacado from datos where tipo = ${tipo}`
-        
+export async function getContent(tipo ,destacado){
+
+    if (tipo == 'admin') {
+        const result = await sql`select id, title, description, image, tipo, destacado from datos`
+
         let lista = []
 
         result.forEach(element => {
             lista.push(element)
         })
 
-        return {resultado : lista}
+        return lista
+    }
+
+    try {
+        if (destacado) {
+            const result = await sql`select id, title, description, image, tipo, destacado from datos where destacado = 1`
+            
+            let lista = []
+
+            result.forEach(element => {
+                lista.push(element)
+            })
+
+            return lista
+        } else {
+            const result = await sql`select id, title, description, image, tipo, destacado from datos where tipo = ${tipo}`
+                
+            let lista = []
+
+            result.forEach(element => {
+                lista.push(element)
+            })
+
+            return lista
+        }
     } catch (e) {
         console.log(e)
         return
@@ -64,4 +89,4 @@ export async function addContent(title, description, image, tipo, destacado) {
 // addContent('name', 'des', '/servicio.png', 'producto', 0)
 // delContent(1, 'productos')
 // console.log(await checkUser ('admin','admin'))
-// console.log(await getContent ('producto'))
+// console.log(await getContent ('produto', true))

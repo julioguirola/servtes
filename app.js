@@ -41,8 +41,8 @@ app.post('/login_api', async (req,res) => {
 })
 
 app.post('/get_content', async (req,res) => {
-    const {tipo} = req.body
-    const result = await getContent(tipo)
+    const {tipo, destacado} = req.body    
+    const result = await getContent(tipo, destacado)
 
     if (result) {
         res.json({succes: true, result: result})
