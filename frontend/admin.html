@@ -19,7 +19,7 @@
             padding: 1em 0;
         }
 
-        #elementos {
+        .elementos {
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(
@@ -61,12 +61,13 @@
             border-radius: 8px;
             position: relative;
             cursor: pointer;
+            transition: 0.5s;
         }
 
         article div {
             position: absolute;
             bottom: 0;
-            width: inherit;
+            width: 300PX;
             height: 30px;
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
@@ -86,6 +87,12 @@
 
         article:hover div {
             height: 100px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        article button {
+            margin: 5;
         }
 
         footer {
@@ -142,12 +149,11 @@
            }
         }
 
+
     </style>
-    <script src="front.js"></script>
     <script>
         const user = localStorage.getItem('user')
         const pass = localStorage.getItem('pass')
-
         if (user != null && pass != null) {
             fetch('/login_api', {
                 method: 'POST',
@@ -168,9 +174,55 @@
         } else {
             location.href = '/'
         }
+        function loadContent() {
+            fetch('/get_content', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ tipo: 'admin', destacado: false })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('elementos').innerHTML = "";
+                data.result.forEach(element => {
+                    document.getElementById('elementos').insertAdjacentHTML('beforeend', `
+                    <article id='element${element.id}' style='background-image: url(${element.image});'>
+                        <button style='margin: 5px;' onclick='editElement(${element.id})'>Editar</button>
+                        <button style='margin: 5px;' onclick='remElement(${element.id})'>Eliminar</button>
+                        <div>
+                            <p><strong>${element.title}:</strong>${element.description}</p>
+                        </div>
+                    </article>
+                    `
+                )});
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', loadContent());
+        function editElement(id) {
+            alert('En desarrollo')
+        }
+        function remElement(id) {
+            fetch('/del_content', {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({id})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.succes) {
+                    document.getElementById(`element${id}`).remove();
+                } else {
+                    alert('Error')
+                }
+            })
 
-        document.addEventListener('DOMContentLoaded', cargarElements('admin', false))
-
+        }
         function isNullOrWS(string) {
             if (string === "") return true;
             for (let i = 0; i < string.length; i++) {
@@ -198,6 +250,7 @@
                 .then(data => {
                     if (data.succes) {
                         document.getElementById('loader').innerHTML = "<p style='color: #09f'>Agregado Correctamente</p>"
+                        loadContent()
                     } else {
                         document.getElementById('loader').innerHTML = "<p style='color: red'>Error, intente de nuevo</p>"
                     }
@@ -216,8 +269,8 @@
         <h1>ServTes / Administración</h1>
     </header>
     <main>
-        <section  id="elementos">
-            <section class="agregar">
+        <section class="elementos">
+            <section class="agregar" style="margin: 10px;">
                 <h3>Agregar Elemento</h3>
                 <p>Nombre</p>
                 <input id="nombre" type="text">
@@ -238,6 +291,8 @@
                 <div id="loader">
                 </div>
             </section>
+        </section>
+        <section class="elementos" id="elementos">
         </section>
     </main>
     <footer>

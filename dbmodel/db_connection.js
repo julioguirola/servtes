@@ -66,7 +66,6 @@ export async function getContent(tipo ,destacado){
 
 export async function delContent(id) {
     try {
-        const columns = [tipo]
         await sql`delete from datos where id = ${id}`
         return true
     } catch (e) {

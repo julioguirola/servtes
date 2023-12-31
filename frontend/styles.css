@@ -27,6 +27,7 @@ article {
     border-radius: 8px;
     position: relative;
     cursor: pointer;
+    transition: 0.5s;
 }
 
 article p {
@@ -38,7 +39,7 @@ article p {
 article div {
     position: absolute;
     bottom: 0;
-    width: inherit;
+    width: 300px;
     height: 30px;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
@@ -52,6 +53,15 @@ article div {
 
 article:hover div {
     height: 100px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 350px;
+}
+
+article:hover {
+    border-radius: 0;
+    width: 350px;
+    height: 250px;
 }
 
 nav {
